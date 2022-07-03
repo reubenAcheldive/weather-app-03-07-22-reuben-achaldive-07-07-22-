@@ -1,30 +1,30 @@
-import React, { FC } from 'react'
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { AutoComplete } from '../../interfaces/AutoComplete.modal';
-const AutoCompleteSearch:FC<{countries:AutoComplete[]}> = ({countries=[]}) => {
-    return (
-        <Autocomplete
-          id="country-select-demo"
-          sx={{ width: 300 }}
-          options={countries}
-          autoHighlight
-          getOptionLabel={(option) => option.Country.LocalizedName}
-          renderOption={(props, option) => (
-           <span> {option?.Country.LocalizedName} ({option.Country.ID}) </span>
+import React, { Dispatch,  SetStateAction,  } from 'react'
+
+import { Cities } from '../../interfaces/Cities.modal';
+export interface IAutoCompleteSearch {
+  cities: Cities[], query: string, setQuery: Dispatch<SetStateAction<string>>
+}
+
+
+const AutoCompleteSearch = ({ cities, query, setQuery }: IAutoCompleteSearch) => {
+
+
+
+  return (
+    <div>
+
+      <input onChange={(e) => setQuery(e.target.value)} value={query} type="text" list="cities" className='search' />
+      <div>
+        <datalist id={"cities"}>
+          {cities.map((city: Cities, i) =>
+            <option key={city.Key} value={city.Country.ID} >{city.Country.LocalizedName}</option>
           )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Choose a country"
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
-              }}
-            />
-          )}
-        />
-      );
+        </datalist>
+      </div>
+
+
+    </div>
+  );
 }
 
 export default AutoCompleteSearch

@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  autoCompleteSlice from "./reducers/autoComplete" 
+import  citiesSlice from "./reducers/citieAutoComplete" 
 export const store = configureStore({
   reducer: {
-    autoComplete:autoCompleteSlice
+    cities:citiesSlice
   },
 });
 

@@ -8,7 +8,7 @@ export interface AdministrativeArea {
   LocalizedName: string;
 }
 
-export interface AutoComplete {
+export interface Cities {
   Version: number;
   Key: string;
   Type: string;

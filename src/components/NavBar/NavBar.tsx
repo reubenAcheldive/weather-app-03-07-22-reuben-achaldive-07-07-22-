@@ -11,22 +11,23 @@ const NavBar = () => {
     return (
         <>
             <AppBar className='appBar' position="static">
-                <Toolbar  className='appBar'>
+                <Toolbar className='appBar'>
 
                     <Typography className='title-nav' variant="h6" component="div" sx={{ flexGrow: 3 }}>
                         Weather App
                     </Typography>
-                    <Button color="inherit"><IconButton
+
+                    <IconButton
                         size="small"
                         edge="start"
                         color="inherit"
                         aria-label="menu"
                         sx={{ mr: 2 }}
                     >
-                        My Favorite 
+                        My Favorite
                         <FavoriteBorderIcon />
                     </IconButton>
-                    </Button>
+
                 </Toolbar>
             </AppBar>
         </>
