@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../Hook/reduxHook";
-import { fetchCitiesBySearch } from "../../state/reducers/citieAutoComplete";
+
 
 import AutoCompleteSearch from "./AutoCompleteSearch";
 import mocCityData from "../../services/mocData/autoComplete.json";

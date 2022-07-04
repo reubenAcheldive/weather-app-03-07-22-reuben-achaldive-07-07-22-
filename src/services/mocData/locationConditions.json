@@ -1,0 +1,25 @@
+[
+  {
+    "LocalObservationDateTime": "2022-07-03T15:20:00-03:00",
+    "EpochTime": 1656872400,
+    "WeatherText": "Cloudy",
+    "WeatherIcon": 7,
+    "HasPrecipitation": false,
+    "PrecipitationType": null,
+    "IsDayTime": true,
+    "Temperature": {
+      "Metric": {
+        "Value": 33.7,
+        "Unit": "C",
+        "UnitType": 17
+      },
+      "Imperial": {
+        "Value": 93,
+        "Unit": "F",
+        "UnitType": 18
+      }
+    },
+    "MobileLink": "http://www.accuweather.com/en/br/israelandia/43543/current-weather/43543?lang=en-us",
+    "Link": "http://www.accuweather.com/en/br/israelandia/43543/current-weather/43543?lang=en-us"
+  }
+]
