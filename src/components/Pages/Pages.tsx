@@ -1,23 +1,20 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './../Home/Home';
-
-
-
+import React from "react";
+import { Row } from "react-bootstrap";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./../Home/Home";
 
 const Pages = () => {
   return (
-    < >
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
+    <div className="container">
+      <Row>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </BrowserRouter>
+      </Row>
+    </div>
+  );
+};
 
-        </Routes>
-      </BrowserRouter>
-
-
-    </>
-  )
-}
-
-export default Pages
+export default Pages;

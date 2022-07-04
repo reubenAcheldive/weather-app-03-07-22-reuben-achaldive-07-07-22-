@@ -4,7 +4,7 @@ import { Cities } from "../interfaces/Cities.modal";
 import { ICurrentConditions } from "../interfaces/CurrentConditions.modal";
 import { AxiosResponse } from "axios";
 import { Key } from "@mui/icons-material";
-import { IForceCastsFiveDays } from "../interfaces/forecastsFiveDayes";
+import { IForceCastsFiveDays } from "../interfaces/forecastsFiveDays";
 
 export const weatherService = {
   fetchByAutoComplete: async (
@@ -26,8 +26,8 @@ export const weatherService = {
   fetchForeCastsFiveDays: async (
     Key: string,
     metric: boolean
-  ): Promise<AxiosResponse<IForceCastsFiveDays[]>> => {
-    return await instance.get<IForceCastsFiveDays[]>(
+  ): Promise<AxiosResponse<IForceCastsFiveDays>> => {
+    return await instance.get<IForceCastsFiveDays>(
       `/forecasts/v1/daily/5day/43543`,
       {
         params: {

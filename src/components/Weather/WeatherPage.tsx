@@ -1,20 +1,25 @@
-import React from 'react'
-import { WeatherDetails } from './WeatherDetails';
-import { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../Hook/reduxHook'
-import { fetchCurrentWeather } from '../../state/actions/weather.action';
-const WeatherPage = () => {
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(fetchCurrentWeather(
-      "43543"))
+import React, { FC, useState } from "react";
+import { WeatherDetails } from "./WeatherDetails";
+import locationConditions from "../../services/mocData/locationConditions.json";
+import { ICurrentConditions } from "../../interfaces/CurrentConditions.modal";
+import ForceCastsFiveDay from "../Fo/ForceCastsFiveDay";
+import { Cities } from "../../interfaces/Cities.modal";
+import { Col, Row } from "react-bootstrap";
 
-  }, [])
+const WeatherPage: FC<{ cities: Cities[] }> = ({ cities }) => {
+  const [currentConditions, setCurrentConditions] =
+    useState<ICurrentConditions[]>(locationConditions);
   return (
-    <div>
-      <WeatherDetails />
-    </div>
-  )
-}
+    <Row>
+      <Col lg={12} md={12} sm={12} xs={12} className="text-center">
+        <WeatherDetails currentConditions={currentConditions} cities={cities} />
+      </Col>
 
-export default WeatherPage
+      <Col >
+        <ForceCastsFiveDay />
+      </Col>
+    </Row>
+  );
+};
+
+export default WeatherPage;

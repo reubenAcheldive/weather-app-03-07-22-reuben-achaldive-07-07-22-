@@ -1,25 +1,25 @@
 [
   {
-    "LocalObservationDateTime": "2022-07-03T15:20:00-03:00",
-    "EpochTime": 1656872400,
-    "WeatherText": "Cloudy",
-    "WeatherIcon": 7,
+    "LocalObservationDateTime": "2022-07-04T17:04:00+03:00",
+    "EpochTime": 1656943440,
+    "WeatherText": "Sunny",
+    "WeatherIcon": 1,
     "HasPrecipitation": false,
     "PrecipitationType": null,
     "IsDayTime": true,
     "Temperature": {
       "Metric": {
-        "Value": 33.7,
+        "Value": 30,
         "Unit": "C",
         "UnitType": 17
       },
       "Imperial": {
-        "Value": 93,
+        "Value": 86,
         "Unit": "F",
         "UnitType": 18
       }
     },
-    "MobileLink": "http://www.accuweather.com/en/br/israelandia/43543/current-weather/43543?lang=en-us",
-    "Link": "http://www.accuweather.com/en/br/israelandia/43543/current-weather/43543?lang=en-us"
+    "MobileLink": "http://www.accuweather.com/en/il/tel-aviv/215854/current-weather/215854?lang=en-us",
+    "Link": "http://www.accuweather.com/en/il/tel-aviv/215854/current-weather/215854?lang=en-us"
   }
 ]

@@ -1,0 +1,18 @@
+:root {
+    --bg-color-darker: rgb(14, 14, 14);
+    --bg-color-light-dark: #727171;
+    --color-text: #fff;
+    --color-dark: rgb(14, 14, 14);
+
+}
+*{
+    box-sizing: border-box;
+}
+.input-auto-complete {
+    width: 22rem;
+    height: 3rem;
+    padding: 0.5rem;
+    border-radius: 8rem;
+
+}
+

@@ -18,7 +18,7 @@
     }
 
     export interface ICurrentConditions {
-        LocalObservationDateTime: Date;
+        LocalObservationDateTime: string;
         EpochTime: number;
         WeatherText: string;
         WeatherIcon: number;
