@@ -2,9 +2,9 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 
 import "./App.css";
-import NavBar from "./components/NavBar/NavBar";
-import Pages from "./components/Pages/Pages";
+
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (

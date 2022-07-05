@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { weatherService } from "../../services/weather";
+import { weatherService } from "../../api/weather.service";
 export const fetchCitiesBySearch = createAsyncThunk(
   "fetch/auto-complete/list",
   async (query: string, err) => {

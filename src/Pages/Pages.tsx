@@ -1,9 +1,9 @@
 import React from "react";
 import { Row } from "react-bootstrap";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./../Home/Home";
+import Home from './../components/Home/Home';
 
-const Pages = () => {
+export const Pages = () => {
   return (
     <div className="container">
       <Row>
@@ -16,5 +16,3 @@ const Pages = () => {
     </div>
   );
 };
-
-export default Pages;

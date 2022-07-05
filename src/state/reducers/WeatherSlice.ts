@@ -1,24 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Cities } from "../../interfaces/Cities.modal";
-import { ICurrentConditions } from "../../interfaces/CurrentConditions.modal";
+import { CompleteCities } from "../../interfaces/Cities.interface";
+import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
 import {
   fetchCitiesBySearch,
   fetchCurrentWeather,
-  fetchForeCastsFiveDays
+  fetchForeCastsFiveDays,
 } from "../actions/weather.action";
 
 export interface State {
-  currentconditions:ICurrentConditions[]
-  cities: Cities[];
-  loading: boolean;
-  error: any;
+  currentconditions: ICurrentConditions[] | null;
+  cities: CompleteCities[] | null;
+  loading: boolean | null;
+  error: any | null;
 }
 
 const initialState: State = {
-  cities: [] as Cities[],
-  loading: false,
+  cities: ([] as CompleteCities[]) || null,
+  loading: false || null,
   error: null,
-  currentconditions:[]
+  currentconditions: [] || null,
 };
 
 const citiesSlice = createSlice({
@@ -41,10 +41,12 @@ const citiesSlice = createSlice({
       })
       .addCase(fetchCurrentWeather.pending, (state, actions) => {
         state.loading = true;
-      }).addCase(fetchCurrentWeather.fulfilled, (state, actions) => {
+      })
+      .addCase(fetchCurrentWeather.fulfilled, (state, actions) => {
         state.loading = false;
-        state.currentconditions = actions.payload!.data
-      }).addCase(fetchCurrentWeather.rejected, (state, action) => {
+        state.currentconditions = actions.payload!.data;
+      })
+      .addCase(fetchCurrentWeather.rejected, (state, action) => {
         state.loading = false;
         state.cities = [];
         state.error = action.error.message;

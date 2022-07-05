@@ -1,20 +1,31 @@
-import { instance } from "./instance";
-import { Cities } from "../interfaces/Cities.modal";
+import { CompleteCities } from "../interfaces/Cities.interface";
 
-import { ICurrentConditions } from "../interfaces/CurrentConditions.modal";
-import { AxiosResponse } from "axios";
-import { Key } from "@mui/icons-material";
-import { IForceCastsFiveDays } from "../interfaces/forecastsFiveDays";
+import { ICurrentConditions } from "../interfaces/CurrentConditions.interface";
+import axios, { AxiosResponse } from "axios";
+
+import { IForceCastsFiveDays } from "../interfaces/forecastsFiveDays.interface";
+export const api_key = "ZfdAAARtlvuZN9j7DjwrTTNUAa0R7AAD";
+export const API_URI: string = "http://dataservice.accuweather.com";
+export const instance = axios.create({
+  baseURL: API_URI,
+  timeout: 1000,
+  params: {
+    apikey: api_key,
+  },
+});
 
 export const weatherService = {
   fetchByAutoComplete: async (
     query: string
-  ): Promise<AxiosResponse<Cities[]>> => {
-    return await instance.get<Cities[]>(`/locations/v1/autocomplete`, {
-      params: {
-        q: query,
-      },
-    });
+  ): Promise<AxiosResponse<CompleteCities[]>> => {
+    return await instance.get<CompleteCities[]>(
+      `/locations/v1/cities/autocomplete`,
+      {
+        params: {
+          q: query,
+        },
+      }
+    );
   },
   fetchLocationConditions: async (
     Key: string

@@ -8,7 +8,7 @@ export interface AdministrativeArea {
   LocalizedName: string;
 }
 
-export interface Cities {
+export interface CompleteCities {
   Version: number;
   Key: string;
   Type: string;
