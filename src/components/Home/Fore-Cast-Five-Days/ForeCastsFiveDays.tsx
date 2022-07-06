@@ -5,10 +5,12 @@ import { DailyForecast, IForceCastsFiveDays } from "../../../interfaces/forecast
 import { Card } from "@mui/material";
 import TemperatureValue from "../../UI/TemperatureValue";
 import { useAppSelector } from "../../../Hook/reduxHook";
+import forceCastsFiveDay1 from "../../../mocData/foreCasts5days.json"
 export interface Props {
     forceCastsFiveDay: IForceCastsFiveDays|null
 }
 const ForeCastsFiveDays = ({forceCastsFiveDay}:Props) => {
+
   const theme = useAppSelector((state) => state.theme.theme);
 
   return (
@@ -16,16 +18,16 @@ const ForeCastsFiveDays = ({forceCastsFiveDay}:Props) => {
       <Col>
         <Row className="text-center justify-content-lg-center">
           
-          {forceCastsFiveDay?.DailyForecasts.map((val: DailyForecast) => (
-            <Col key={val.MobileLink} className='m-2' xl={2} lg={2} md={2} sm={12} xs={12}>
-              <Card className={theme?"white-mode ":"gray-dark-mode  " }>
-                <Row>
+          {forceCastsFiveDay1?.DailyForecasts.map((val: DailyForecast) => (
+            <Col key={val.MobileLink} className='m-2 itemContainer' xl={2} lg={2} md={2} sm={12} xs={12}>
+              <Card  className={theme?"white-mode ":"gray-dark-mode  " }>
+                <Row className="m-3"> 
                   <Col>
-                    <h4>{moment(val.Date).format("dddd")}</h4>
+                    <h4 >{moment(val.Date).format("dddd")}</h4>
                     <h6>{val.Day.IconPhrase}</h6>
                     <img
                       width={100}
-                      src="https://developer.accuweather.com/sites/default/files/02-s.png"
+                      src={`https://developer.accuweather.com/sites/default/files/0${val.Day.Icon}-s.png`}
                       alt=""
                       loading="lazy"
                     />

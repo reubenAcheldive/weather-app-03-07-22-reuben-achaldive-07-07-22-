@@ -1,13 +1,15 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { ICurrentConditions } from "../../../interfaces/CurrentConditions.interface";
 
 import { Col, Row } from "react-bootstrap";
-import moment from "moment";
+
 import TemperatureValue from "../../UI/TemperatureValue";
 import { Button } from "@mui/material";
-import { useAppSelector } from "../../../Hook/reduxHook";
+import { useAppDispatch, useAppSelector } from "../../../Hook/reduxHook";
 import { CompleteCities } from "../../../interfaces/Cities.interface";
-
+import currentconditions1 from "../../../mocData/locationConditions.json";
+import { saveAndUpdateFavorite } from "../../../utils/localStorage/localStorage";
+import { insertFavorite } from "../../../state/reducers/FavoritesSlice";
 export interface Props {
   currentconditions: ICurrentConditions[] | null;
   CompleteCities: CompleteCities[] | null;
@@ -20,15 +22,28 @@ const CurrentWeather = ({
   CompleteCities,
   toggleTypeTemperature,
   val,
-  cityName,
+  cityName = "tel aviv",
 }: Props) => {
- 
-  
+  const dispatch = useAppDispatch();
   const theme = useAppSelector((state) => state.theme.theme);
-  const addCurrentFavoriteConditions = () => {};
+  const addCurrentFavoriteConditions = (
+    cityName: string,
+    current: ICurrentConditions
+  ) => {
+    const newObject = {
+      cityName,
+      ...current,
+    };
+    saveAndUpdateFavorite(newObject);
+    let getCities = JSON.parse(localStorage.getItem("favorites")!)!;
+    if (getCities?.length) {
+      console.log({getCities})
+      dispatch(insertFavorite(getCities));
+    }
+  };
   return (
     <Row className="justify-content-lg-center m-5 p-2 ">
-      {currentconditions?.map((current: ICurrentConditions) => (
+      {currentconditions1?.map((current: ICurrentConditions) => (
         <div key={current?.EpochTime}>
           <Col>
             <Row>
@@ -57,9 +72,9 @@ const CurrentWeather = ({
                 <span>
                   <Button
                     type="button"
-                    // onClick={() =>
-                    //   addCurrentFavoriteConditions("tel aviv", current)
-                    // }
+                    onClick={() =>
+                      addCurrentFavoriteConditions("tel aviv", current)
+                    }
                   >
                     {" "}
                     add to favorite

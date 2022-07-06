@@ -35,7 +35,7 @@ export const fetchForeCastsFiveDays = createAsyncThunk(
     try {
       const { data } = await weatherService.fetchForeCastsFiveDays(
         payload.Key,
-        (payload.metric = false)
+        (payload.metric )
       );
       return data;
     } catch (error: any) {

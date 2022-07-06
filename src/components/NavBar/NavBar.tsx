@@ -12,7 +12,7 @@ import { toggleTypeTemperature } from "../../state/reducers/WeatherSlice";
 import { changeThemeToggle } from "../../state/reducers/ThemeModeSlice";
 import { color } from "@mui/system";
 import { Row } from "react-bootstrap";
-import { setItemToLocalStorage } from './../../utils/localStorage/toggleTheme';
+import { setItemToLocalStorage } from '../../utils/localStorage/localStorage';
 const NavBar = () => {
   const dispatch = useAppDispatch();
   const select = useAppSelector((state) => state.cities);
@@ -20,6 +20,7 @@ const NavBar = () => {
 
   const changeTemperature = () => {
     dispatch(toggleTypeTemperature(!select.toggleTypeTemperature));
+    setItemToLocalStorage('temperature',!select.toggleTypeTemperature)
    
   };
   const changeTheme = () => {

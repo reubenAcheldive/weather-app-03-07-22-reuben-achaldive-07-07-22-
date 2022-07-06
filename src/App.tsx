@@ -10,7 +10,14 @@ import { useAppDispatch, useAppSelector } from "./Hook/reduxHook";
 import { ToastContainer, toast } from "react-toastify";
 
 import { changeThemeToggle } from "./state/reducers/ThemeModeSlice";
-import { getItemForChangeThemeColor } from "./utils/localStorage/toggleTheme";
+import {
+  getItemForChangeThemeColor,
+  getTemporaryValue,
+} from "./utils/localStorage/localStorage";
+import {
+  fetchCurrentWeather,
+  fetchForeCastsFiveDays,
+} from "./state/actions/weather.action";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -19,11 +26,13 @@ function App() {
     (state) => state.cities
   );
   useEffect(() => {
-    // dispatch(fetchCurrentWeather("43543"));
-    // dispatch(
-    //   fetchForeCastsFiveDays({ Key: "43543", metric: toggleTypeTemperature })
-    // );
-  }, []);
+    dispatch(
+      fetchForeCastsFiveDays({
+        Key: "43543",
+        metric: getTemporaryValue("temperature"),
+      })
+    );
+  }, [dispatch, toggleTypeTemperature]);
 
   useEffect(() => {
     const get = getItemForChangeThemeColor("theme");
@@ -32,26 +41,26 @@ function App() {
   }, [dispatch, theme]);
 
   useEffect(() => {
-    if(error)
-    toast(error, {
-      theme: `${!theme? "dark" :"light"}`,
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    if (error)
+      toast(error, {
+        theme: `${!theme ? "dark" : "light"}`,
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
   }, [error]);
 
   return (
     <div
-      className={
-        theme ? "white-mode container-fluid" : "gray-dark-mode  container-fluid"
-      }
+      className={` App ${theme} ? "white-mode container-fluid" : "gray-dark-mode  container-fluid"`}
     >
-      <Row>
+      <Row
+        className={` App ${theme} ? "white-mode container-fluid" : "gray-dark-mode  container-fluid"`}
+      >
         <Col lg={12} md={12} sm={12} xs={12}>
           <NavBar />
         </Col>

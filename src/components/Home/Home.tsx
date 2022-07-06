@@ -3,7 +3,6 @@ import { Row, Col } from "react-bootstrap";
 import { useAppSelector, useAppDispatch } from "../../Hook/reduxHook";
 import AutoComplete from "./Auto-Complete/AutoComplete";
 import {
-
   fetchCitiesBySearch,
   fetchCurrentWeather,
   fetchForeCastsFiveDays,
@@ -16,11 +15,12 @@ import { Card } from "@mui/material";
 import ForeCastsFiveDays from "./Fore-Cast-Five-Days/ForeCastsFiveDays";
 import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { insertFavorite } from "../../state/reducers/FavoritesSlice";
 
 const Home = () => {
   const theme = useAppSelector((state) => state.theme.theme);
   const [val, setVal] = useState<string>("");
-  const [cityName, setCityName] = useState<string>("");
+  const [cityName, setCityName] = useState<string>("tel aviv");
   const [favorite, setFavorite] = useState<{
     cityName: string;
     favorite: ICurrentConditions;
@@ -32,18 +32,22 @@ const Home = () => {
     getLocationByGeoPosition,
     forceCastsFiveDay,
     toggleTypeTemperature,
-    error
+    error,
   } = useAppSelector((state) => state.cities);
 
   const setLocation = (latitude: number, longitude: number) => {
     dispatch(fetchLocationByGeoPosition({ latitude, longitude }));
 
     dispatch(fetchCurrentWeather("212541"));
-   
-
-    setCityName("bnvn");
-
   };
+  useEffect(() => {
+    let getCities = JSON.parse(localStorage.getItem("favorites")!)!;
+    console.log({getCities});
+    
+    if (getCities?.length) {
+      dispatch(insertFavorite(getCities));
+    }
+  },[dispatch]);
 
   // useEffect(()=>{
   //   if(error){
@@ -62,8 +66,6 @@ const Home = () => {
     setLocation(latitude, longitude);
   }
   function errorCallback() {
-
-    
     dispatch(fetchCurrentWeather("43543"));
   }
 
@@ -73,11 +75,10 @@ const Home = () => {
 
   useEffect(() => {
     if (getLocationByGeoPosition?.LocalizedName!) {
-  
     }
     if (!val) {
       dispatch(clearCitiesLists());
-      return
+      return;
     }
 
     const debounceSearch = setTimeout(
@@ -85,7 +86,7 @@ const Home = () => {
       300
     );
     const findKeyCity = getKeyOfCity(citiesAutoComplete, val);
-   
+
     if (findKeyCity) {
       dispatch(fetchCurrentWeather(findKeyCity.Key));
       dispatch(
@@ -105,7 +106,7 @@ const Home = () => {
   return (
     <Row className="m-4">
       <Card
-        className={theme ? "white-mode" : "darker-mode card"}
+        className={theme ? "white-mode m-1" : "darker-mode card m-1"}
         style={{
           minWidth: "15rem",
           minHeight: "15rem",
@@ -113,7 +114,10 @@ const Home = () => {
         }}
       >
         <Col>
-          <AutoComplete citiesAutoComplete={citiesAutoComplete} setVal={setVal} />
+          <AutoComplete
+            citiesAutoComplete={citiesAutoComplete}
+            setVal={setVal}
+          />
         </Col>
         <Col>
           <CurrentWeather

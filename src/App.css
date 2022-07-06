@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Gulzar&display=swap');
 
 :root {
-    --bg-color-darker: rgb(14, 14, 14) !important;
-    --bg-colo-dark-gray: #4e4c4c !important;
+    --bg-color-darker: rgba(14, 14, 14, 0.788) !important;
+    --bg-colo-dark-gray: #8f8c8c !important;
     --color-text: #fff !important;
 
     --bg-background-white: #fff !important;
@@ -12,23 +13,38 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Gulzar', serif;
 
+}
+
+.App,
+#root {
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    background-color: rgb(176, 171, 171);
+}
+
+body,
+html {
+    height: 100%;
 }
 
 .darker-mode,
 #darker-mode {
-    background-color: var(--bg-color-darker)  !important;
+    background-color: var(--bg-color-darker) !important;
     color: var(--color-text) !important
 }
 
 .white-mode,
 #white-mode {
     background-color: var(--bg-background-white) !important;
-    color: var(--bg-color-darker) 
+    color: var(--bg-color-darker)
 }
 
 .gray-dark-mode {
     background-color: var(--bg-colo-dark-gray) !important;
+    color: var(--bg-background-white) !important;
 
 }
 
@@ -60,4 +76,8 @@
 input {
     width: 40%;
     height: auto;
+}
+
+h4 {
+    font-size: medium;
 }

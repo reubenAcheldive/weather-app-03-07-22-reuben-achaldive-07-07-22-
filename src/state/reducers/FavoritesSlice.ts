@@ -2,12 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
 
 export interface State {
-  favorites:
-    | {
-        nameCity: string;
-        cities: ICurrentConditions;
-      }[]
-    | null;
+  favorites: ICurrentConditions[] | null;
 }
 
 const initialState: State = {
@@ -18,8 +13,10 @@ const favoritesSlice = createSlice({
   name: "auto-complete",
   initialState,
   reducers: {
-    getFavoriteCities: (state, action) => {
-      state.favorites?.concat(action.payload);
+    insertFavorite: (state, action) => {
+      console.log(action.payload);
+
+      state.favorites = action.payload;
     },
     // removeOne : (state,action) =>{
     //    state.favorites = {...state.favorites?.filter((c)=>c.cities.EpochTime !== action.payload.EpochTime)}
@@ -27,6 +24,6 @@ const favoritesSlice = createSlice({
   },
 });
 
-export const { getFavoriteCities } = favoritesSlice.actions;
+export const { insertFavorite } = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;
