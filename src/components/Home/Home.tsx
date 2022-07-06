@@ -3,9 +3,11 @@ import { Row, Col } from "react-bootstrap";
 import { useAppSelector, useAppDispatch } from "../../Hook/reduxHook";
 import AutoComplete from "./Auto-Complete/AutoComplete";
 import {
+
   fetchCitiesBySearch,
   fetchCurrentWeather,
   fetchForeCastsFiveDays,
+  fetchLocationByGeoPosition,
 } from "../../state/actions/weather.action";
 import { getKeyOfCity } from "../../utils/getKeyCity";
 import { clearCitiesLists } from "../../state/reducers/WeatherSlice";
@@ -13,43 +15,77 @@ import CurrentWeather from "./Weather/CurrentWeather";
 import { Card } from "@mui/material";
 import ForeCastsFiveDays from "./Fore-Cast-Five-Days/ForeCastsFiveDays";
 import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
-import { getCurrentGeoLocation } from "../../utils/Geolocation/locations";
+import { unwrapResult } from "@reduxjs/toolkit";
+
 const Home = () => {
   const theme = useAppSelector((state) => state.theme.theme);
   const [val, setVal] = useState<string>("");
+  const [cityName, setCityName] = useState<string>("");
   const [favorite, setFavorite] = useState<{
     cityName: string;
     favorite: ICurrentConditions;
   }>();
   const dispatch = useAppDispatch();
   const {
-    cities,
+    citiesAutoComplete,
     currentconditions,
-    error,
-    loading,
+    getLocationByGeoPosition,
     forceCastsFiveDay,
     toggleTypeTemperature,
+    error
   } = useAppSelector((state) => state.cities);
 
-  useEffect(() => {
-    console.log({currentconditions})
-    getCurrentGeoLocation(currentconditions);
-  },[currentconditions])
+  const setLocation = (latitude: number, longitude: number) => {
+    dispatch(fetchLocationByGeoPosition({ latitude, longitude }));
 
+    dispatch(fetchCurrentWeather("212541"));
+   
+
+    setCityName("bnvn");
+
+  };
+
+  // useEffect(()=>{
+  //   if(error){
+  //     alert(error)
+  //   }
+  // },[error])
+
+  function getDefaultLocation() {
+    if (currentconditions) return;
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+  }
+  function successCallback(position: GeolocationPosition) {
+    const {
+      coords: { latitude, longitude },
+    } = position;
+    setLocation(latitude, longitude);
+  }
+  function errorCallback() {
+
+    
+    dispatch(fetchCurrentWeather("43543"));
+  }
 
   useEffect(() => {
-    console.log(toggleTypeTemperature);
+    getDefaultLocation();
+  }, []);
+
+  useEffect(() => {
+    if (getLocationByGeoPosition?.LocalizedName!) {
+  
+    }
     if (!val) {
-      console.log(1);
       dispatch(clearCitiesLists());
+      return
     }
 
     const debounceSearch = setTimeout(
       () => dispatch(fetchCitiesBySearch(val)),
       300
     );
-    const findKeyCity = getKeyOfCity(cities, val);
-
+    const findKeyCity = getKeyOfCity(citiesAutoComplete, val);
+   
     if (findKeyCity) {
       dispatch(fetchCurrentWeather(findKeyCity.Key));
       dispatch(
@@ -59,8 +95,8 @@ const Home = () => {
         })
       );
     }
-    if (cities?.length) {
-      console.log(cities[0].LocalizedName.toString());
+    if (citiesAutoComplete?.length) {
+      setCityName(citiesAutoComplete[0].LocalizedName.toString());
     }
 
     return () => clearTimeout(debounceSearch);
@@ -77,14 +113,15 @@ const Home = () => {
         }}
       >
         <Col>
-          <AutoComplete citiesAutoComplete={cities} setVal={setVal} />
+          <AutoComplete citiesAutoComplete={citiesAutoComplete} setVal={setVal} />
         </Col>
         <Col>
           <CurrentWeather
+            CompleteCities={citiesAutoComplete}
             currentconditions={currentconditions}
             toggleTypeTemperature={toggleTypeTemperature}
             val={val}
-            cityName={cities}
+            cityName={cityName}
           />
           <ForeCastsFiveDays forceCastsFiveDay={forceCastsFiveDay} />
         </Col>

@@ -1,29 +1,34 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { weatherService } from "../../api/weather.service";
 import { CompleteCities } from "../../interfaces/Cities.interface";
 import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
 import { IForceCastsFiveDays } from "../../interfaces/forecastsFiveDays.interface";
+import { IGeoLocation } from "../../interfaces/GeoPosition";
 import {
   fetchCitiesBySearch,
   fetchCurrentWeather,
   fetchForeCastsFiveDays,
+  fetchLocationByGeoPosition,
 } from "../actions/weather.action";
 
 export interface State {
   currentconditions: ICurrentConditions[] | null;
-  cities: CompleteCities[] | null;
+  citiesAutoComplete: CompleteCities[] | null;
   loading: boolean | null;
-  error: any | null;
+  error: string;
   forceCastsFiveDay: null | IForceCastsFiveDays;
-  toggleTypeTemperature: boolean 
+  toggleTypeTemperature: boolean;
+  getLocationByGeoPosition: IGeoLocation | null;
 }
 
 const initialState: State = {
-  cities: ([] as CompleteCities[]) || null,
+  citiesAutoComplete: ([] as CompleteCities[]) || null,
   loading: false || null,
-  error: null,
+  error: "",
   currentconditions: null,
-  forceCastsFiveDay: null ,
-  toggleTypeTemperature: false
+  forceCastsFiveDay: null,
+  toggleTypeTemperature: false,
+  getLocationByGeoPosition: null,
 };
 
 const citiesSlice = createSlice({
@@ -31,11 +36,11 @@ const citiesSlice = createSlice({
   initialState,
   reducers: {
     clearCitiesLists: (state) => {
-      state.cities = [];
+      state.citiesAutoComplete = [];
     },
-    toggleTypeTemperature : (state,action) =>{
-        state.toggleTypeTemperature = action.payload;
-    }
+    toggleTypeTemperature: (state, action) => {
+      state.toggleTypeTemperature = action.payload;
+    },
   },
   extraReducers: (builder): void => {
     builder
@@ -44,41 +49,52 @@ const citiesSlice = createSlice({
       })
       .addCase(fetchCitiesBySearch.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.cities = payload as CompleteCities[];
+        state.citiesAutoComplete = payload as CompleteCities[];
       })
-      .addCase(fetchCitiesBySearch.rejected, (state, action) => {
+      .addCase(fetchCitiesBySearch.rejected, (state, { payload }) => {
         state.loading = false;
-        state.cities = [];
-        state.error = action.error.message;
+        state.citiesAutoComplete = [];
+        state.error = payload as string;
       })
-      .addCase(fetchCurrentWeather.pending, (state, actions) => {
+      .addCase(fetchCurrentWeather.pending, (state, { payload }) => {
         state.loading = true;
       })
       .addCase(fetchCurrentWeather.fulfilled, (state, actions) => {
         state.loading = false;
         state.currentconditions = actions.payload as ICurrentConditions[];
       })
-      .addCase(fetchCurrentWeather.rejected, (state, action) => {
+      .addCase(fetchCurrentWeather.rejected, (state, { payload }) => {
         state.loading = false;
-        state.cities = [];
-        state.error = action.error.message;
+
+        state.error = payload as string;
       })
-      .addCase(fetchForeCastsFiveDays.pending, (state, actions) => {
+      .addCase(fetchForeCastsFiveDays.pending, (state, { payload }) => {
         state.loading = true;
       })
       .addCase(fetchForeCastsFiveDays.fulfilled, (state, actions) => {
         state.loading = false;
-        state.forceCastsFiveDay = actions.payload! 
-       
+        state.forceCastsFiveDay = actions.payload!;
       })
-      .addCase(fetchForeCastsFiveDays.rejected, (state, action) => {
+      .addCase(fetchForeCastsFiveDays.rejected, (state, { payload }) => {
         state.loading = false;
-        state.cities = [];
-        state.error = action.error.message;
+
+        state.error = payload as string;
+      })
+      .addCase(fetchLocationByGeoPosition.pending, (state, { payload }) => {
+        state.loading = true;
+      })
+      .addCase(fetchLocationByGeoPosition.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getLocationByGeoPosition = action.payload!;
+      })
+      .addCase(fetchLocationByGeoPosition.rejected, (state, { payload }) => {
+        state.loading = false;
+
+        state.error = payload as string;
       });
   },
 });
 
-export const { clearCitiesLists,toggleTypeTemperature } = citiesSlice.actions;
+export const { clearCitiesLists, toggleTypeTemperature } = citiesSlice.actions;
 
 export default citiesSlice.reducer;

@@ -10,25 +10,22 @@ import { CompleteCities } from "../../../interfaces/Cities.interface";
 
 export interface Props {
   currentconditions: ICurrentConditions[] | null;
-  cityName: CompleteCities[] | null;
+  CompleteCities: CompleteCities[] | null;
   toggleTypeTemperature: boolean;
   val: string;
+  cityName: string;
 }
 const CurrentWeather = ({
   currentconditions,
-  cityName,
+  CompleteCities,
   toggleTypeTemperature,
   val,
+  cityName,
 }: Props) => {
+ 
+  
   const theme = useAppSelector((state) => state.theme.theme);
-  const addCurrentFavoriteConditions = (
-    cityName: string | null,
-    favorite: ICurrentConditions
-  ): void => {
-    if (cityName) {
-      let items: ICurrentConditions[] = [{ cityName, ...favorite }];
-    }
-  };
+  const addCurrentFavoriteConditions = () => {};
   return (
     <Row className="justify-content-lg-center m-5 p-2 ">
       {currentconditions?.map((current: ICurrentConditions) => (
@@ -36,7 +33,7 @@ const CurrentWeather = ({
           <Col>
             <Row>
               <Col xxl={9} xl={8} lg={8} md={8} sm={6} xs={12}>
-                <h2></h2>
+                <h2>{cityName}</h2>
                 {toggleTypeTemperature ? (
                   <span>
                     <TemperatureValue
@@ -60,9 +57,9 @@ const CurrentWeather = ({
                 <span>
                   <Button
                     type="button"
-                    onClick={() =>
-                      addCurrentFavoriteConditions("tel aviv", current)
-                    }
+                    // onClick={() =>
+                    //   addCurrentFavoriteConditions("tel aviv", current)
+                    // }
                   >
                     {" "}
                     add to favorite

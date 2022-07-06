@@ -29,11 +29,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // console.log({theme})
-
-    
+   
     const get = getItemForChangeThemeColor("theme");
-    console.log("🚀 ~ file: App.tsx ~ line 36 ~ useEffect ~ get", get);
+
     dispatch(changeThemeToggle(get));
   }, [dispatch, theme]);
 

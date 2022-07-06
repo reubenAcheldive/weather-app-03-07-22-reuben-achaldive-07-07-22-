@@ -6,7 +6,7 @@ export const setItemToLocalStorage = (key: string, value: any) => {
 export const getItemForChangeThemeColor = (key: string) => {
   const value = localStorage.getItem(key);
   if (value !== null) {
-    console.log(JSON.parse(value));
+ 
     return JSON.parse(value);
   }
 };

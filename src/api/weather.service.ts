@@ -4,7 +4,7 @@ import { ICurrentConditions } from "../interfaces/CurrentConditions.interface";
 import axios, { AxiosResponse } from "axios";
 
 import { IForceCastsFiveDays } from "../interfaces/forecastsFiveDays.interface";
-export const api_key = "cSs2riuGjEBrz8F8O3mbL2Gxmz3ZPnfv";
+export const api_key = "vOlibZRJRMFllBgt0nMX2lrvJTLhgC7t";
 export const API_URI: string = "http://dataservice.accuweather.com";
 export const instance = axios.create({
   baseURL: API_URI,
@@ -16,7 +16,7 @@ export const instance = axios.create({
 
 export const weatherService = {
   fetchByAutoComplete: async (
-    query: string = "tel aviv"
+    query: string 
   ): Promise<AxiosResponse<CompleteCities[]>> => {
     return await instance.get<CompleteCities[]>(
       `/locations/v1/cities/autocomplete`,
@@ -28,7 +28,7 @@ export const weatherService = {
     );
   },
   fetchLocationConditions: async (
-    Key: string
+    Key: string = ""
   ): Promise<AxiosResponse<ICurrentConditions[]>> => {
     return await instance.get<ICurrentConditions[]>(
       `/currentconditions/v1/${Key}`
@@ -47,11 +47,14 @@ export const weatherService = {
       }
     );
   },
-  fetchLocationByGeoPosition: async (
-    latitude: number,
-    longitude: number
-  ): Promise<AxiosResponse> => {
-    return axios.get(`/locations/v1/cities/geoposition/search`, {
+  fetchLocationByGeoPosition: async ({
+    latitude,
+    longitude,
+  }: {
+    latitude: number;
+    longitude: number;
+  }): Promise<AxiosResponse> => {
+    return instance.get(`/locations/v1/cities/geoposition/search`, {
       params: {
         q: `${latitude},${longitude}`,
       },

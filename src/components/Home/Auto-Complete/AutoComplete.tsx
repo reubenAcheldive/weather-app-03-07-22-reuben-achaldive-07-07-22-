@@ -8,6 +8,8 @@ export interface Props {
 }
 const AutoComplete = ({ setVal, citiesAutoComplete }: Props) => {
   const theme = useAppSelector((state) => state.theme.theme);
+
+  
   return (
     <Row
       className="text-center mt-5 p-1 "
