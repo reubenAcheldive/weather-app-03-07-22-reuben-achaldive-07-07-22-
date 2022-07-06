@@ -18,12 +18,20 @@ const favoritesSlice = createSlice({
 
       state.favorites = action.payload;
     },
-    // removeOne : (state,action) =>{
-    //    state.favorites = {...state.favorites?.filter((c)=>c.cities.EpochTime !== action.payload.EpochTime)}
-    // }
+    removeOne: (state, { payload }) => {
+      console.log(payload);
+      state.favorites = state.favorites?.filter((item: ICurrentConditions) => {
+        return (
+          item.cityName?.toLocaleLowerCase() !==
+          payload?.cityName!.toLocaleLowerCase()
+        );
+      })!;
+     
+    if(state.favorites)  localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    },
   },
 });
 
-export const { insertFavorite } = favoritesSlice.actions;
+export const { insertFavorite, removeOne } = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;

@@ -16,7 +16,7 @@ import ForeCastsFiveDays from "./Fore-Cast-Five-Days/ForeCastsFiveDays";
 import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { insertFavorite } from "../../state/reducers/FavoritesSlice";
-
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 const Home = () => {
   const theme = useAppSelector((state) => state.theme.theme);
   const [val, setVal] = useState<string>("");
