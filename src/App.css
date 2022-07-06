@@ -1,18 +1,62 @@
 :root {
-    --bg-color-darker: rgb(14, 14, 14);
-    --bg-color-light-dark: #727171;
-    --color-text: #fff;
-    --color-dark: rgb(14, 14, 14);
+    --bg-color-darker: rgb(14, 14, 14) !important;
+    --bg-colo-dark-gray: #4e4c4c !important;
+    --color-text: #fff !important;
+
+    --bg-background-white: #fff !important;
+
+    --bg-color-gray-light: #868585 !important;
 
 }
-*{
+
+* {
     box-sizing: border-box;
-}
-.input-auto-complete {
-    width: 22rem;
-    height: 3rem;
-    padding: 0.5rem;
-    border-radius: 8rem;
 
 }
 
+.darker-mode,
+#darker-mode {
+    background-color: var(--bg-color-darker)  !important;
+    color: var(--color-text) !important
+}
+
+.white-mode,
+#white-mode {
+    background-color: var(--bg-background-white) !important;
+    color: var(--bg-color-darker) 
+}
+
+.gray-dark-mode {
+    background-color: var(--bg-colo-dark-gray) !important;
+
+}
+
+
+.gray-light-mode {
+    background-color: var(--bg-color-gray-light) !important;
+    color: #fff !important;
+}
+
+
+.input-autocomplete-dark,
+.input-autocomplete-dark::placeholder {
+    background-color: var(--bg-colo-dark-gray) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 0.5rem !important;
+    border-radius: 15px !important;
+}
+
+.input-autocomplete-white,
+.input-autocomplete-white::placeholder {
+    background-color: var(--bg-background-white) !important;
+    color: rgb(11, 0, 0) !important;
+
+    padding: 0.5rem !important;
+    border-radius: 15px !important;
+}
+
+input {
+    width: 40%;
+    height: auto;
+}

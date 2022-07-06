@@ -4,7 +4,7 @@ import { ICurrentConditions } from "../interfaces/CurrentConditions.interface";
 import axios, { AxiosResponse } from "axios";
 
 import { IForceCastsFiveDays } from "../interfaces/forecastsFiveDays.interface";
-export const api_key = "ZfdAAARtlvuZN9j7DjwrTTNUAa0R7AAD";
+export const api_key = "cSs2riuGjEBrz8F8O3mbL2Gxmz3ZPnfv";
 export const API_URI: string = "http://dataservice.accuweather.com";
 export const instance = axios.create({
   baseURL: API_URI,
@@ -16,7 +16,7 @@ export const instance = axios.create({
 
 export const weatherService = {
   fetchByAutoComplete: async (
-    query: string
+    query: string = "tel aviv"
   ): Promise<AxiosResponse<CompleteCities[]>> => {
     return await instance.get<CompleteCities[]>(
       `/locations/v1/cities/autocomplete`,
@@ -39,13 +39,23 @@ export const weatherService = {
     metric: boolean
   ): Promise<AxiosResponse<IForceCastsFiveDays>> => {
     return await instance.get<IForceCastsFiveDays>(
-      `/forecasts/v1/daily/5day/43543`,
+      `/forecasts/v1/daily/5day/${Key}`,
       {
         params: {
           metric,
         },
       }
     );
+  },
+  fetchLocationByGeoPosition: async (
+    latitude: number,
+    longitude: number
+  ): Promise<AxiosResponse> => {
+    return axios.get(`/locations/v1/cities/geoposition/search`, {
+      params: {
+        q: `${latitude},${longitude}`,
+      },
+    });
   },
 };
 //https://weather.ls.hereapi.com/static/weather/icon/25.png

@@ -18,6 +18,7 @@
     }
 
     export interface ICurrentConditions {
+        cityName?: string;
         LocalObservationDateTime: string;
         EpochTime: number;
         WeatherText: string;

@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  citiesSlice from "./reducers/WeatherSlice" 
+import citiesSlice from "./reducers/WeatherSlice";
+import favoriteSlice from "./reducers/FavoritesSlice";
+import themeToggleSlice from "./reducers/ThemeModeSlice";
 export const store = configureStore({
   reducer: {
-    cities:citiesSlice
+    cities: citiesSlice,
+    favorite: favoriteSlice,
+    theme: themeToggleSlice,
   },
 });
 

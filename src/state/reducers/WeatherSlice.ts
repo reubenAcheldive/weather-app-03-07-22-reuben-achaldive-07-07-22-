@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CompleteCities } from "../../interfaces/Cities.interface";
 import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
+import { IForceCastsFiveDays } from "../../interfaces/forecastsFiveDays.interface";
 import {
   fetchCitiesBySearch,
   fetchCurrentWeather,
@@ -12,19 +13,30 @@ export interface State {
   cities: CompleteCities[] | null;
   loading: boolean | null;
   error: any | null;
+  forceCastsFiveDay: null | IForceCastsFiveDays;
+  toggleTypeTemperature: boolean 
 }
 
 const initialState: State = {
   cities: ([] as CompleteCities[]) || null,
   loading: false || null,
   error: null,
-  currentconditions: [] || null,
+  currentconditions: null,
+  forceCastsFiveDay: null ,
+  toggleTypeTemperature: false
 };
 
 const citiesSlice = createSlice({
   name: "auto-complete",
   initialState,
-  reducers: {},
+  reducers: {
+    clearCitiesLists: (state) => {
+      state.cities = [];
+    },
+    toggleTypeTemperature : (state,action) =>{
+        state.toggleTypeTemperature = action.payload;
+    }
+  },
   extraReducers: (builder): void => {
     builder
       .addCase(fetchCitiesBySearch.pending, (state, action) => {
@@ -32,7 +44,7 @@ const citiesSlice = createSlice({
       })
       .addCase(fetchCitiesBySearch.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.cities = payload!.data;
+        state.cities = payload as CompleteCities[];
       })
       .addCase(fetchCitiesBySearch.rejected, (state, action) => {
         state.loading = false;
@@ -44,9 +56,22 @@ const citiesSlice = createSlice({
       })
       .addCase(fetchCurrentWeather.fulfilled, (state, actions) => {
         state.loading = false;
-        state.currentconditions = actions.payload!.data;
+        state.currentconditions = actions.payload as ICurrentConditions[];
       })
       .addCase(fetchCurrentWeather.rejected, (state, action) => {
+        state.loading = false;
+        state.cities = [];
+        state.error = action.error.message;
+      })
+      .addCase(fetchForeCastsFiveDays.pending, (state, actions) => {
+        state.loading = true;
+      })
+      .addCase(fetchForeCastsFiveDays.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.forceCastsFiveDay = actions.payload! 
+       
+      })
+      .addCase(fetchForeCastsFiveDays.rejected, (state, action) => {
         state.loading = false;
         state.cities = [];
         state.error = action.error.message;
@@ -54,6 +79,6 @@ const citiesSlice = createSlice({
   },
 });
 
-export const { actions } = citiesSlice;
+export const { clearCitiesLists,toggleTypeTemperature } = citiesSlice.actions;
 
 export default citiesSlice.reducer;
