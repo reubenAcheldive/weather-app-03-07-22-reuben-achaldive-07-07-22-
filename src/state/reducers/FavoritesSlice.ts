@@ -19,11 +19,11 @@ const favoritesSlice = createSlice({
       state.favorites = action.payload;
     },
     removeOne: (state, { payload }) => {
-      console.log(payload);
+      console.log({payload});
       state.favorites = state.favorites?.filter((item: ICurrentConditions) => {
         return (
           item.cityName?.toLocaleLowerCase() !==
-          payload?.cityName!.toLocaleLowerCase()
+          payload?.cityName?.toLocaleLowerCase()
         );
       })!;
      

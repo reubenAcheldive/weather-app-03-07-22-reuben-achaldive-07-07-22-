@@ -31,13 +31,13 @@
     }
 
     export interface Metric {
-        Value: number;
+        value: number;
         Unit: string;
         UnitType: number;
     }
 
     export interface Imperial {
-        Value: number;
+        value: number;
         Unit: string;
         UnitType: number;
     }

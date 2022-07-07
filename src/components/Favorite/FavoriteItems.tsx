@@ -5,15 +5,15 @@ import TemperatureValue from "../UI/TemperatureValue";
 export interface Props {
   cities: ICurrentConditions[];
   theme: boolean;
-  toggleTypeTemperature: boolean;
+  TypeTemperature: boolean;
 }
-export const FavoriteItems = ({ cities,theme,toggleTypeTemperature }:Props) => {
+export const FavoriteItems = ({ cities,theme,TypeTemperature }:Props) => {
   return (
     <Row className="text-center justify-content-lg-center">
-      {cities?.map((favorite: ICurrentConditions) => (
+      {cities?.map((favorite: ICurrentConditions,i) => (
         <Col
           className="itemContainer m-2"
-          key={favorite.MobileLink}
+          key={i}
           xl={2}
           lg={2}
           md={2}
@@ -33,7 +33,7 @@ export const FavoriteItems = ({ cities,theme,toggleTypeTemperature }:Props) => {
                 />
 
                 <Col lg={12}>
-                  {toggleTypeTemperature ? (
+                  {TypeTemperature ? (
                     <span>
                       <TemperatureValue
                         Value={favorite.Temperature.Metric.Value}
@@ -46,6 +46,7 @@ export const FavoriteItems = ({ cities,theme,toggleTypeTemperature }:Props) => {
                       Unit={favorite.Temperature.Imperial.Unit}
                     />
                   )}{" "}
+                 
                 </Col>
               </Col>
             </Row>

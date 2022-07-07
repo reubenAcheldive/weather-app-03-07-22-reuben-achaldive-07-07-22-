@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { weatherService } from "../../api/weather.service";
+
 import { CompleteCities } from "../../interfaces/Cities.interface";
 import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
-import { IForceCastsFiveDays } from "../../interfaces/forecastsFiveDays.interface";
-import { IGeoLocation } from "../../interfaces/GeoPosition";
+import { IForceCastsFiveDays } from "../../interfaces/ForecastsFiveDays.interface";
+
+import { IGeoLocation } from "../../interfaces/GeoPosition.interface";
 import {
   fetchCitiesBySearch,
   fetchCurrentWeather,
@@ -17,7 +18,7 @@ export interface State {
   loading: boolean | null;
   error: string;
   forceCastsFiveDay: null | IForceCastsFiveDays;
-  toggleTypeTemperature: boolean;
+  TypeTemperature: boolean;
   getLocationByGeoPosition: IGeoLocation | null;
 }
 
@@ -27,7 +28,7 @@ const initialState: State = {
   error: "",
   currentconditions: null,
   forceCastsFiveDay: null,
-  toggleTypeTemperature: false,
+  TypeTemperature: false,
   getLocationByGeoPosition: null,
 };
 
@@ -38,8 +39,8 @@ const citiesSlice = createSlice({
     clearCitiesLists: (state) => {
       state.citiesAutoComplete = [];
     },
-    toggleTypeTemperature: (state, action) => {
-      state.toggleTypeTemperature = action.payload;
+    toggleTemperature: (state, action) => {
+      state.TypeTemperature = action.payload;
     },
   },
   extraReducers: (builder): void => {
@@ -95,6 +96,6 @@ const citiesSlice = createSlice({
   },
 });
 
-export const { clearCitiesLists, toggleTypeTemperature } = citiesSlice.actions;
+export const { clearCitiesLists, toggleTemperature } = citiesSlice.actions;
 
 export default citiesSlice.reducer;

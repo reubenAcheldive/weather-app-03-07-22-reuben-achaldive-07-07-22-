@@ -3,8 +3,8 @@ import { CompleteCities } from "../interfaces/Cities.interface";
 import { ICurrentConditions } from "../interfaces/CurrentConditions.interface";
 import axios, { AxiosResponse } from "axios";
 
-import { IForceCastsFiveDays } from "../interfaces/forecastsFiveDays.interface";
-export const api_key = "vOlibZRJRMFllBgt0nMX2lrvJTLhgC7t";
+import { IForceCastsFiveDays } from "../interfaces/ForecastsFiveDays.interface";
+export const api_key = "GzFGqNqFrd3gbRkR4H9A5Ak4RuY3fzm4";
 export const API_URI: string = "http://dataservice.accuweather.com";
 export const instance = axios.create({
   baseURL: API_URI,
@@ -61,5 +61,3 @@ export const weatherService = {
     });
   },
 };
-//https://weather.ls.hereapi.com/static/weather/icon/25.png
-// "http://dataservice.accuweather.com/forecasts/v1/daily/5day/43543?apikey=0ezmnfK1vYwdTtchYP0rFTBI4NA8XrMH&metric=false"

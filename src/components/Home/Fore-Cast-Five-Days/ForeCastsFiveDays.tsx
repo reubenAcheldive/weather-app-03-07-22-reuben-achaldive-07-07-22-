@@ -1,11 +1,11 @@
 import React from "react";
 import { Col, Row } from 'react-bootstrap';
 import  moment  from 'moment';
-import { DailyForecast, IForceCastsFiveDays } from "../../../interfaces/forecastsFiveDays.interface";
+import { DailyForecast, IForceCastsFiveDays } from "../../../interfaces/ForecastsFiveDays.interface";
 import { Card } from "@mui/material";
 import TemperatureValue from "../../UI/TemperatureValue";
 import { useAppSelector } from "../../../Hook/reduxHook";
-import forceCastsFiveDay1 from "../../../mocData/foreCasts5days.json"
+
 export interface Props {
     forceCastsFiveDay: IForceCastsFiveDays|null
 }
@@ -18,8 +18,8 @@ const ForeCastsFiveDays = ({forceCastsFiveDay}:Props) => {
       <Col>
         <Row className="text-center justify-content-lg-center">
           
-          {forceCastsFiveDay1?.DailyForecasts.map((val: DailyForecast) => (
-            <Col key={val.MobileLink} className='m-2 itemContainer' xl={2} lg={2} md={2} sm={12} xs={12}>
+          {forceCastsFiveDay?.DailyForecasts.map((val: DailyForecast,i) => (
+            <Col key={val.MobileLink+i} className='m-2 itemContainer' xl={2} lg={2} md={2} sm={12} xs={12}>
               <Card  className={theme?"white-mode ":"gray-dark-mode  " }>
                 <Row className="m-3"> 
                   <Col>

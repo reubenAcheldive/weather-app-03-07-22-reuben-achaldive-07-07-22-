@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 
 import { weatherService } from "../../api/weather.service";
 export const fetchCitiesBySearch = createAsyncThunk(
@@ -64,7 +63,7 @@ export const fetchLocationByGeoPosition = createAsyncThunk(
       return data;
     } catch (error:any) {
   
-      console.log("🚀 ~ file: weather.action.ts ~ line 67 ~ error", error)
+ 
       return  err.rejectWithValue('Network Error');
     }
   }

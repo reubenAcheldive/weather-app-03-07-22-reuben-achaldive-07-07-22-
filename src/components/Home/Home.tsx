@@ -14,13 +14,14 @@ import CurrentWeather from "./Weather/CurrentWeather";
 import { Card } from "@mui/material";
 import ForeCastsFiveDays from "./Fore-Cast-Five-Days/ForeCastsFiveDays";
 import { ICurrentConditions } from "../../interfaces/CurrentConditions.interface";
-import { unwrapResult } from "@reduxjs/toolkit";
+
 import { insertFavorite } from "../../state/reducers/FavoritesSlice";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+
 const Home = () => {
   const theme = useAppSelector((state) => state.theme.theme);
-  const [val, setVal] = useState<string>("");
-  const [cityName, setCityName] = useState<string>("tel aviv");
+  const [val, setval] = useState<string>("");
+  const [cityName, setCityName] = useState<string>();
+  const [error, setError] = useState<boolean>(false);
   const [favorite, setFavorite] = useState<{
     cityName: string;
     favorite: ICurrentConditions;
@@ -31,10 +32,9 @@ const Home = () => {
     currentconditions,
     getLocationByGeoPosition,
     forceCastsFiveDay,
-    toggleTypeTemperature,
-    error,
+    TypeTemperature,
   } = useAppSelector((state) => state.cities);
-
+  const selectTheme = useAppSelector((state) => state.theme);
   const setLocation = (latitude: number, longitude: number) => {
     dispatch(fetchLocationByGeoPosition({ latitude, longitude }));
 
@@ -42,18 +42,12 @@ const Home = () => {
   };
   useEffect(() => {
     let getCities = JSON.parse(localStorage.getItem("favorites")!)!;
-    console.log({getCities});
-    
+    console.log({ getCities });
+
     if (getCities?.length) {
       dispatch(insertFavorite(getCities));
     }
-  },[dispatch]);
-
-  // useEffect(()=>{
-  //   if(error){
-  //     alert(error)
-  //   }
-  // },[error])
+  }, [dispatch]);
 
   function getDefaultLocation() {
     if (currentconditions) return;
@@ -71,18 +65,20 @@ const Home = () => {
 
   useEffect(() => {
     getDefaultLocation();
+    setCityName(getLocationByGeoPosition?.EnglishName);
   }, []);
 
   useEffect(() => {
-    if (getLocationByGeoPosition?.LocalizedName!) {
-    }
     if (!val) {
       dispatch(clearCitiesLists());
       return;
     }
 
     const debounceSearch = setTimeout(
-      () => dispatch(fetchCitiesBySearch(val)),
+      () => {
+        dispatch(fetchCitiesBySearch(val));
+      },
+
       300
     );
     const findKeyCity = getKeyOfCity(citiesAutoComplete, val);
@@ -92,16 +88,27 @@ const Home = () => {
       dispatch(
         fetchForeCastsFiveDays({
           Key: findKeyCity.Key,
-          metric: toggleTypeTemperature,
+          metric: TypeTemperature,
         })
       );
+      setCityName(val);
     }
     if (citiesAutoComplete?.length) {
-      setCityName(citiesAutoComplete[0].LocalizedName.toString());
+      setCityName(citiesAutoComplete[0].LocalizedName.toLowerCase());
     }
 
     return () => clearTimeout(debounceSearch);
-  }, [val, toggleTypeTemperature, dispatch]);
+  }, [val, TypeTemperature]);
+
+  const handleSearch = (e: any) => {
+    let res = /^[a-zA-Z]+$/.test(e.target.value);
+    console.log(res);
+    if (res) {
+      setval(e.target.value);
+      setError(false);
+    }
+    setError(true);
+  };
 
   return (
     <Row className="m-4">
@@ -116,18 +123,42 @@ const Home = () => {
         <Col>
           <AutoComplete
             citiesAutoComplete={citiesAutoComplete}
-            setVal={setVal}
+            handleSearch={handleSearch}
+            error={error!}
           />
         </Col>
         <Col>
-          <CurrentWeather
-            CompleteCities={citiesAutoComplete}
-            currentconditions={currentconditions}
-            toggleTypeTemperature={toggleTypeTemperature}
-            val={val}
-            cityName={cityName}
-          />
-          <ForeCastsFiveDays forceCastsFiveDay={forceCastsFiveDay} />
+          {currentconditions ? (
+            <>
+              <CurrentWeather
+                CompleteCities={citiesAutoComplete}
+                currentconditions={currentconditions}
+                TypeTemperature={TypeTemperature}
+                val={val}
+                cityName={cityName!}
+              />
+              <ForeCastsFiveDays forceCastsFiveDay={forceCastsFiveDay} />
+            </>
+          ) : (
+            <div className="d-flex justify-content-center align-items-center w-100 m-3">
+              {getLocationByGeoPosition ? (
+                <div
+                  className={`spinner-border ${
+                    selectTheme.theme ? "text-light" : "text-dark"
+                  }`}
+                  style={{ width: "3rem", height: "3rem" }}
+                  role="status"
+                >
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              ) : (
+                <p className="fw-bold">
+                  There is'nt a location to watch, please try to search one with
+                  search field above.
+                </p>
+              )}
+            </div>
+          )}
         </Col>
       </Card>
     </Row>
