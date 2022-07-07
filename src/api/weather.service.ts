@@ -4,8 +4,8 @@ import { ICurrentConditions } from "../interfaces/CurrentConditions.interface";
 import axios, { AxiosResponse } from "axios";
 
 import { IForceCastsFiveDays } from "../interfaces/ForecastsFiveDays.interface";
-export const api_key = "GzFGqNqFrd3gbRkR4H9A5Ak4RuY3fzm4";
-export const API_URI: string = "http://dataservice.accuweather.com";
+export const api_key = process.env.REACT_APP_API_KEY ||"GzFGqNqFrd3gbRkR4H9A5Ak4RuY3fzm4";
+export const API_URI: string =  process.env.REACT_APP_BASR_URL ? process.env.REACT_APP_BASR_URL : 'http://dataservice.accuweather.com';;
 export const instance = axios.create({
   baseURL: API_URI,
   timeout: 1000,
