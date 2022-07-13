@@ -22,7 +22,8 @@
 #root {
     height: 100%;
     min-height: 100%;
-    overflow: hidden;
+    overflow: auto;
+   
     background-color: rgb(176, 171, 171);
 }
 

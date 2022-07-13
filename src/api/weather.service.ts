@@ -4,8 +4,12 @@ import { ICurrentConditions } from "../interfaces/CurrentConditions.interface";
 import axios, { AxiosResponse } from "axios";
 
 import { IForceCastsFiveDays } from "../interfaces/ForecastsFiveDays.interface";
-export const api_key = process.env.REACT_APP_API_KEY ? process.env.REACT_APP_API_KEY :"Bb4oM2CZznumUJi5W25GZ1T4CpRpkcGB";
-export const API_URI: string =  process.env.REACT_APP_BASR_URL ? process.env.REACT_APP_BASR_URL : 'http://dataservice.accuweather.com';;
+export const api_key = process.env.REACT_APP_API_KEY
+  ? process.env.REACT_APP_API_KEY
+  : "lxSeyjGxk2a9HXYEpOu0b4rXxZXjvNNW";
+export const API_URI: string = process.env.REACT_APP_BASR_URL
+  ? process.env.REACT_APP_BASR_URL
+  : "http://dataservice.accuweather.com";
 export const instance = axios.create({
   baseURL: API_URI,
   timeout: 1000,
@@ -16,7 +20,7 @@ export const instance = axios.create({
 
 export const weatherService = {
   fetchByAutoComplete: async (
-    query: string 
+    query: string
   ): Promise<AxiosResponse<CompleteCities[]>> => {
     return await instance.get<CompleteCities[]>(
       `/locations/v1/cities/autocomplete`,
