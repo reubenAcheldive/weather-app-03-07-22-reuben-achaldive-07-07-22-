@@ -44,7 +44,6 @@ const CurrentWeather = ({
       ({ EpochTime }: ICurrentConditions) =>
         EpochTime === currentconditions[0].EpochTime
     );
-    console.log({ isLocationIsFavorite });
     setLike(isLocationIsFavorite?.EpochTime ? true : false);
   }, [currentconditions, favorites]);
 
@@ -59,7 +58,6 @@ const CurrentWeather = ({
     saveAndUpdateFavorite(saveToLocal);
     let getCities = JSON.parse(localStorage.getItem("favorites")!)!;
     if (getCities?.length) {
-      console.log({ getCities });
       dispatch(insertFavorite(getCities));
     }
   };

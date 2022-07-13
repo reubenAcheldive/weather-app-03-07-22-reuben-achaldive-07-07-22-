@@ -35,14 +35,24 @@ const Home = () => {
     TypeTemperature,
   } = useAppSelector((state) => state.cities);
   const selectTheme = useAppSelector((state) => state.theme);
-  const setLocation = (latitude: number, longitude: number) => {
-    dispatch(fetchLocationByGeoPosition({ latitude, longitude }));
-
-    dispatch(fetchCurrentWeather("212541"));
+  const setLocation = async (latitude: number, longitude: number) => {
+    await dispatch(fetchLocationByGeoPosition({ latitude, longitude }));
+    console.log({ getLocationByGeoPosition }, "text");
   };
   useEffect(() => {
+    if (getLocationByGeoPosition) {
+      dispatch(fetchCurrentWeather(getLocationByGeoPosition?.Key));
+
+      dispatch(
+        fetchForeCastsFiveDays({
+          Key: getLocationByGeoPosition?.Key,
+          metric: TypeTemperature,
+        })
+      );
+    }
+  }, [TypeTemperature, dispatch, getLocationByGeoPosition]);
+  useEffect(() => {
     let getCities = JSON.parse(localStorage.getItem("favorites")!)!;
-    console.log({ getCities });
 
     if (getCities?.length) {
       dispatch(insertFavorite(getCities));
@@ -67,21 +77,9 @@ const Home = () => {
     getDefaultLocation();
     setCityName(getLocationByGeoPosition?.EnglishName);
   }, []);
-
   useEffect(() => {
-    if (!val) {
-      dispatch(clearCitiesLists());
-      return;
-    }
-
-    const debounceSearch = setTimeout(
-      () => {
-        dispatch(fetchCitiesBySearch(val));
-      },
-
-      300
-    );
     const findKeyCity = getKeyOfCity(citiesAutoComplete, val);
+    console.log({ findKeyCity });
 
     if (findKeyCity) {
       dispatch(fetchCurrentWeather(findKeyCity.Key));
@@ -91,24 +89,9 @@ const Home = () => {
           metric: TypeTemperature,
         })
       );
-      setCityName(val);
+      setCityName(findKeyCity.LocalizedName);
     }
-    if (citiesAutoComplete?.length) {
-      setCityName(citiesAutoComplete[0].LocalizedName.toLowerCase());
-    }
-
-    return () => clearTimeout(debounceSearch);
-  }, [val, TypeTemperature]);
-
-  const handleSearch = (e: any) => {
-    let res = /^[a-zA-Z]+$/.test(e.target.value);
-    console.log(res);
-    if (res) {
-      setval(e.target.value);
-      setError(false);
-    }
-    setError(true);
-  };
+  }, [TypeTemperature, val]);
 
   return (
     <Row className="m-4">
@@ -123,8 +106,9 @@ const Home = () => {
         <Col>
           <AutoComplete
             citiesAutoComplete={citiesAutoComplete}
-            handleSearch={handleSearch}
+            setval={setval}
             error={error!}
+            val={val}
           />
         </Col>
         <Col>

@@ -22,7 +22,6 @@ const Favorite = () => {
   }, [favorites]);
   useEffect(() => {
     let getCities = JSON.parse(localStorage.getItem("favorites")!)!;
-    console.log({ getCities });
 
     if (getCities?.length) {
       dispatch(insertFavorite(getCities));

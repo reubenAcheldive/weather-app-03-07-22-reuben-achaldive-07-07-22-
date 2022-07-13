@@ -36,8 +36,10 @@ const citiesSlice = createSlice({
   name: "auto-complete",
   initialState,
   reducers: {
-    clearCitiesLists: (state) => {
-      state.citiesAutoComplete = [];
+    clearCitiesLists: (state, { payload }) => {
+     
+      state.citiesAutoComplete = payload;
+     
     },
     toggleTemperature: (state, action) => {
       state.TypeTemperature = action.payload;

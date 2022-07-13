@@ -30,12 +30,12 @@ function App() {
     (state) => state.cities
   );
   useEffect(() => {
-    dispatch(
-      fetchForeCastsFiveDays({
-        Key: "43543",
-        metric: getTemporaryValue("temperature"),
-      })
-    );
+    // dispatch(
+    //   fetchForeCastsFiveDays({
+    //     Key: "43543",
+    //     metric: getTemporaryValue("temperature"),
+    //   })
+    // );
   }, [ TypeTemperature]);
 
   useEffect(() => {

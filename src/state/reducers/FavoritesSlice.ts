@@ -14,12 +14,12 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     insertFavorite: (state, action) => {
-      console.log(action.payload);
+     
 
       state.favorites = action.payload;
     },
     removeOne: (state, { payload }) => {
-      console.log({payload});
+     
       state.favorites = state.favorites?.filter((item: ICurrentConditions) => {
         return (
           item.cityName?.toLocaleLowerCase() !==

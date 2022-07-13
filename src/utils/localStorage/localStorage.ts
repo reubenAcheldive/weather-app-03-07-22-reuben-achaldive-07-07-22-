@@ -34,7 +34,7 @@ export function saveAndUpdateFavorite(conditions: ICurrentConditions) {
         item.cityName?.toLocaleLowerCase() ===
         conditions.cityName?.toLocaleLowerCase()
     );
-    console.log(index);
+  
     if (index === -1) {
       x.push(conditions, ...getFromLocalStorage);
       setItemToLocalStorage('favorites',x)

@@ -26,7 +26,6 @@ const NavBar = () => {
   const theme = useAppSelector((state) => state.theme.theme);
 
   const changeTemperature = () => {
-    console.log(select.TypeTemperature)
     dispatch(toggleTemperature(!select.TypeTemperature));
     setItemToLocalStorage("temperature", !select.TypeTemperature);
   };

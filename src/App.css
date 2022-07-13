@@ -82,3 +82,28 @@ input {
 h4 {
     font-size: medium;
 }
+
+
+ul {
+text-align: right;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    display: inline-block;
+
+
+}
+
+ul li {
+    list-style-type: none;
+
+    width: 10rem;
+    font-size: 14px;
+    padding: 3px;
+    text-align: left;
+    border: 2px solid rgb(255, 255, 255);
+}
+
+ul li>span:nth-child(1) {
+    padding-left: 3px;
+}

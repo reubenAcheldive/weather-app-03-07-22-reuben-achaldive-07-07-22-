@@ -6,7 +6,6 @@ export interface ITemperatureValue {
   UnitType?: number;
 }
 const TemperatureValue = ({ Unit, Value }: ITemperatureValue) => {
-  console.log({Unit, Value})
   return (
     <>
       {" "}
